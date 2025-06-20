@@ -11,4 +11,4 @@ replicaCount: 1
 service:
   type: NodePort
   port: 30101
-  targetPort: 80
+  targetPort: 8080
