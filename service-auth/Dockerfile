@@ -6,5 +6,5 @@ RUN mvn clean install -Pprod -DskipTests=true
 
 FROM openjdk:17-jdk-alpine
 COPY --from=build /app/project/target/demo-0.0.1-SNAPSHOT.jar ./deploy/demo-0.0.1-SNAPSHOT.jar
-
+EXPOSE 8080
 ENTRYPOINT java -jar ./deploy/demo-0.0.1-SNAPSHOT.jar
