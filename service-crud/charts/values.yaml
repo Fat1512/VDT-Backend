@@ -1,0 +1,18 @@
+namespace: "backend"
+
+# Deployment
+image:
+  repository: "fat1512/vdt-service-auth"
+  tag: "1.0.0"
+
+replicaCount: 1
+
+# Service
+service:
+  type: NodePort
+  port: 30101
+  targetPort: 80
+env:
+  DB_URL: jdbc:postgresql://my-postgres.default.svc.cluster.local:5432/mydb
+  DB_USERNAME: myuser
+  DB_PASSWORD: mypassword
