@@ -138,19 +138,20 @@ pipeline {
             
             def updated = false
             dir('VDT-Backend-Config') {
+              def imageTag = "${gitCommit}"
 
               if (env.BUILD_SERVICE_AUTH == 'true') {
-                  echo "Updating ServiceAuth manifest with tag: ${gitCommit}"
+                  echo "Updating ServiceAuth manifest with tag: ${imageTag}"
                   sh """
-                    sed -i 's|tag: .*|tag: ${gitCommit}|g' service-auth/charts/values.yaml
+                    sed -i 's|tag: .*|tag: ${imageTag}|g' service-auth/charts/values.yaml
                   """
                   updated = true
               }
     
               if (env.BUILD_SERVICE_CRUD == 'true') {
-                  echo "Updating ServiceCRUD manifest with tag: ${gitCommit}"
+                  echo "Updating ServiceCRUD manifest with tag: ${imageTag}"
                   sh """
-                    sed -i 's|tag: .*|tag: ${gitCommit}|g' service-crud/charts/values.yaml
+                    sed -i 's|tag: .*|tag: ${imageTag}|g' service-crud/charts/values.yaml
                   """
                   updated = true
               }
@@ -160,7 +161,7 @@ pipeline {
                   git config user.email 'letanphat15122004@gmail.com'
                   git config user.name 'Fat1512'
                   git add -A
-                  git commit -m 'ci: Update manifests for commit ${gitCommit}'
+                  git commit -m 'ci: Update manifests for commit ${imageTag}'
                   git push origin main
                   """
                   echo "Updated K8s manifests successfully."
