@@ -44,10 +44,7 @@ public class SecurityConfig {
                 .addFilterBefore(CORSFilter, ChannelProcessingFilter.class);
         http.cors(AbstractHttpConfigurer::disable);
 
-        http.authorizeHttpRequests(request -> {
-            request.anyRequest().authenticated();
-        })
-        .formLogin(AbstractHttpConfigurer::disable)
+        http.formLogin(AbstractHttpConfigurer::disable)
         .httpBasic(AbstractHttpConfigurer::disable)
         .exceptionHandling(exception -> {
             exception.authenticationEntryPoint(customAuthenticationEntryPoint);
