@@ -140,19 +140,17 @@ pipeline {
             dir('VDT-Backend-Config') {
 
               if (env.BUILD_SERVICE_AUTH == 'true') {
-                  def authImageTag = "${SERVICE_AUTH_IMAGE_NAME}:${gitCommit}"
-                  echo "Updating ServiceAuth manifest with image: ${authImageTag}"
+                  echo "Updating ServiceAuth manifest with tag: ${gitCommit}"
                   sh """
-                    sed -i 's|image: .*|image: ${authImageTag}|g' service-auth/charts/templates/deployment.yaml
+                    sed -i 's|tag: .*|tag: ${gitCommit}|g' service-auth/charts/values.yaml
                   """
                   updated = true
               }
     
               if (env.BUILD_SERVICE_CRUD == 'true') {
-                  def crudImageTag = "${SERVICE_CRUD_IMAGE_NAME}:${gitCommit}"
-                  echo "Updating ServiceCRUD manifest with image: ${crudImageTag}"
+                  echo "Updating ServiceCRUD manifest with tag: ${gitCommit}"
                   sh """
-                    sed -i 's|image: .*|image: ${crudImageTag}|g' service-crud/charts/templates/deployment.yaml
+                    sed -i 's|tag: .*|tag: ${gitCommit}|g' service-crud/charts/values.yaml
                   """
                   updated = true
               }
