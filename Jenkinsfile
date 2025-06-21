@@ -16,7 +16,6 @@ pipeline {
                       mountPath: /home/jenkins/agent
 
                   # Container 2
-                  # THAY ĐỔI: Sử dụng image 'debug' của Kaniko. Image này chứa shell và lệnh 'sleep'.
                   - name: kaniko
                     image: gcr.io/kaniko-project/executor:debug
                     imagePullPolicy: Always
@@ -33,10 +32,8 @@ pipeline {
                     - name: docker-config
                       mountPath: /kaniko/.docker/
                   volumes:
-                  # Volume để chia sẻ workspace giữa tất cả các container
                   - name: workspace-volume
                     emptyDir: {}
-                  # Volume từ Secret để Kaniko xác thực với Docker Hub
                   - name: docker-config
                     secret:
                       secretName: dockerhub-credentials
