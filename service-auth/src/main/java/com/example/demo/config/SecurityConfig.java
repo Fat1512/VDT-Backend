@@ -45,8 +45,7 @@ public class SecurityConfig {
         http.cors(AbstractHttpConfigurer::disable);
 
         http.authorizeHttpRequests(request -> {
-            request.requestMatchers("/api/v1/auth/**").permitAll()
-                    .anyRequest().authenticated();
+            request.requestMatchers("/api/v1/auth/**").permitAll();
         })
         .formLogin(AbstractHttpConfigurer::disable)
         .httpBasic(AbstractHttpConfigurer::disable)
