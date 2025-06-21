@@ -1,13 +1,14 @@
-namespace: "backend"
+namespace: "vdt"
 
 # Deployment
 image:
   repository: "fat1512/vdt-service-auth"
-  tag: "1.0.10"
+  tag: "1.0.30"
 
 replicaCount: 1
 
 # Service
 service:
-  type: ClusterIP
-  port: 8080
+  type: NodePort
+  port: 30101
+  targetPort: 8080

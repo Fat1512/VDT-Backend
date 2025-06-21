@@ -46,10 +46,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(request -> {
             request.requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/v1/students/**").hasAnyAuthority("USER", "ADMIN")
-                .requestMatchers(HttpMethod.POST, "/api/v1/students/**").hasAnyAuthority("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/v1/students/**").hasAnyAuthority("ADMIN")
-                .anyRequest().authenticated();
+                    .anyRequest().authenticated();
         })
         .formLogin(AbstractHttpConfigurer::disable)
         .httpBasic(AbstractHttpConfigurer::disable)
