@@ -29,7 +29,6 @@ public class StudentController {
                 .message(APIResponseMessage.SUCCESSFULLY_DELETED.name())
                 .data(null)
                 .build();
-                
         return ResponseEntity.ok(response);
     }
 
