@@ -143,7 +143,7 @@ pipeline {
               if (env.BUILD_SERVICE_AUTH == 'true') {
                   echo "Updating ServiceAuth manifest with tag: ${imageTag}"
                   sh """
-                    sed -i 's|tag: .*|tag: ${imageTag}|g' service-auth/charts/values.yaml
+                    sed -i 's|tag: .*|tag: ${imageTag}|g' auth_service_values.yaml
                   """
                   updated = true
               }
@@ -151,7 +151,7 @@ pipeline {
               if (env.BUILD_SERVICE_CRUD == 'true') {
                   echo "Updating ServiceCRUD manifest with tag: ${imageTag}"
                   sh """
-                    sed -i 's|tag: .*|tag: ${imageTag}|g' service-crud/charts/values.yaml
+                    sed -i 's|tag: .*|tag: ${imageTag}|g' crud_service_values.yaml
                   """
                   updated = true
               }
