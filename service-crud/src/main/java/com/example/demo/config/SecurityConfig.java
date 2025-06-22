@@ -43,6 +43,7 @@ public class SecurityConfig {
             .addFilterBefore(CORSFilter, ChannelProcessingFilter.class);
 
         http.authorizeHttpRequests(auth -> auth
+            .requestMatchers(HttpMethod.GET, "/api/v1/students/**").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/v1/students").hasAuthority("ADMIN")
             .requestMatchers(HttpMethod.PUT, "/api/v1/students").hasAuthority("ADMIN")
             .requestMatchers(HttpMethod.DELETE, "/api/v1/students/{id}").hasAuthority("ADMIN")
