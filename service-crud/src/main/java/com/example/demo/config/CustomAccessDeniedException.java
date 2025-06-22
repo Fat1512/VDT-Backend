@@ -22,10 +22,10 @@ public class CustomAccessDeniedException implements AccessDeniedHandler {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
         ExceptionResponse exceptionResponse = ExceptionResponse.builder()
-                .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .error("Access denied")
                 .message(accessDeniedException.getMessage())
                 .timestamp(System.currentTimeMillis())
-                .status(HttpStatus.BAD_REQUEST.value())
+                .status(HttpStatus.FORBIDDEN.value())
                 .build();
 
         ObjectMapper objectMapper = new ObjectMapper();

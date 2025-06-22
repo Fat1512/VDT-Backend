@@ -18,10 +18,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity(debug = false)
 @Configuration
 @RequiredArgsConstructor
-@EnableMethodSecurity
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CORSFilter CORSFilter;
@@ -37,13 +36,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(CORSFilter, ChannelProcessingFilter.class);
-        http.cors(AbstractHttpConfigurer::disable);
+            .sessionManagement(session ->
+                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authenticationProvider(authenticationProvider)
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(CORSFilter, ChannelProcessingFilter.class);
 
+        http.authorizeHttpRequests(auth -> auth
+            .requestMatchers(HttpMethod.POST, "/api/v1/students").hasAuthority("ADMIN")
+            .requestMatchers(HttpMethod.PUT, "/api/v1/students").hasAuthority("ADMIN")
+            .requestMatchers(HttpMethod.DELETE, "/api/v1/students/{id}").hasAuthority("ADMIN")
+            .requestMatchers("/actuator/**").permitAll()
+            .anyRequest().authenticated());
+
+        http.cors(AbstractHttpConfigurer::disable);
         http.formLogin(AbstractHttpConfigurer::disable)
         .httpBasic(AbstractHttpConfigurer::disable)
         .exceptionHandling(exception -> {
